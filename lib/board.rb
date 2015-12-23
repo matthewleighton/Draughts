@@ -36,15 +36,15 @@ class Board
       sq_list.each do |sq|
         if row < 3
           if row % 2 == 0
-            sq.piece = Piece.new(p_two, sq.location) if sq.location[0] % 2 == 0
+            sq.piece = Piece.new(p_two, sq.location, self) if sq.location[0] % 2 == 0
           else
-            sq.piece = Piece.new(p_two, sq.location) if sq.location[0] % 2 == 1
+            sq.piece = Piece.new(p_two, sq.location, self) if sq.location[0] % 2 == 1
           end
         elsif row > 4
           if row % 2 == 0
-            sq.piece = Piece.new(p_one, sq.location) if sq.location[0] % 2 == 0
+            sq.piece = Piece.new(p_one, sq.location, self) if sq.location[0] % 2 == 0
           else
-            sq.piece = Piece.new(p_one, sq.location) if sq.location[0] % 2 == 1
+            sq.piece = Piece.new(p_one, sq.location, self) if sq.location[0] % 2 == 1
           end
         end
       end

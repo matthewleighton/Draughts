@@ -1,9 +1,10 @@
 class Piece
   attr_accessor :player, :location, :alive, :king, :valid_move_list, :board
 
-  def initialize(player, loc)
+  def initialize(player, loc, board)
     @player = player
     @location = loc
+    @board = board
     @alive = true
     @king = false
   end
@@ -18,7 +19,7 @@ class Piece
   end
 
   # Returns an array of valid coordinates the piece can move to.
-  def valid_moves(board)
+  def valid_moves
     @valid_move_list = []
     forward = @player.color == "W" ? 1 : -1
       
@@ -49,7 +50,7 @@ class Piece
     @valid_move_list.count == 0 ? false : @valid_move_list
   end
 
-  def move_piece(destination, board)
+  def move_piece(destination)
     start_square = board.find_square(@location)
     end_square = board.find_square(destination)
     start_square.piece, end_square.piece = end_square.piece, start_square.piece
@@ -70,11 +71,11 @@ class Piece
     end
   end
 
-  def update_board(board)
+  def update_board
     board.find_square(location.join("")).piece = self
   end
 
-  def remove_piece(board)
+  def remove_piece
     board.find_square(location).piece = nil
     @alive = false
     @player.remaining_pieces -= 1

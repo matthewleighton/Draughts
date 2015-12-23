@@ -13,7 +13,7 @@ class Player
     piece = select_piece
     @board.display_board(piece.valid_move_list)
     move_destination = get_move(piece.valid_move_list)
-    piece.move_piece(move_destination, @board)
+    piece.move_piece(move_destination)
     @board.display_board
   end
 
@@ -30,7 +30,7 @@ class Player
   # Chooses a piece to move. Must be friendly and have valid moves.
   def select_piece
     piece = nil
-    until piece and piece.is_a?(Piece) and piece.is_friendly?(self) and piece.valid_moves(@board)
+    until piece and piece.is_a?(Piece) and piece.is_friendly?(self) and piece.valid_moves
       print "\nSelect a piece to move: "
       location = gets.chomp
       if (location =~ /^[1-9][1-9]$/) == 0
