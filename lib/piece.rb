@@ -59,6 +59,10 @@ class Piece
     if (end_square.location[0] - start_square.location[0]).abs == 2
       capture_piece(start_square.location, end_square.location)
     end
+
+    if (@location[1] == 1 && @player.color == "B") or (@location[1] == 8 && @player.color == "W")
+      @king = true
+    end
   end
 
   def capture_piece(start_square, end_square)
