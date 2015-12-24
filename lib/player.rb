@@ -1,20 +1,27 @@
 class Player
-  attr_accessor :name, :remaining_pieces, :board, :color
+  attr_accessor :name, :remaining_pieces, :board, :color, :pieces
 
   def initialize(name = "HAL", color, board)
     @name = name
     @remaining_pieces = 12
     @board = board
     @color = color
+    @pieces = []
   end
 
   def turn
     puts "#{@name}(#{@color}), it's your turn!"
+    
     piece = select_piece
     @board.display_board(piece.valid_move_list)
     move_destination = get_move(piece.valid_move_list)
     piece.move_piece(move_destination)
+
     @board.display_board
+  end
+
+  def capture_again(piece)
+
   end
 
   def get_move(valid_moves)

@@ -1,5 +1,5 @@
 class Piece
-  attr_accessor :player, :location, :alive, :king, :valid_move_list, :board
+  attr_accessor :player, :location, :alive, :king, :valid_move_list, :board, :can_capture
 
   def initialize(player, loc, board)
     @player = player
@@ -7,6 +7,7 @@ class Piece
     @board = board
     @alive = true
     @king = false
+    @can_capture = false
   end
 
   def is_friendly?(player)
@@ -21,6 +22,9 @@ class Piece
   # Returns an array of valid coordinates the piece can move to.
   def valid_moves
     @valid_move_list = []
+    capture_list = []
+    non_capture_list = []
+
     forward = @player.color == "w" ? 1 : -1
       
     possible_moves = [[@location[0] - 1, @location[1] + forward],
@@ -34,7 +38,7 @@ class Piece
       square = board.find_square(target)
       next unless square
       if !square.piece
-        @valid_move_list << square.location
+        non_capture_list << square.location
       elsif square.piece.player != @player
        
         i = [target[0] - @location[0], target[1] - @location[1]]
@@ -42,10 +46,12 @@ class Piece
         jump_enemy_square = board.find_square(jump_enemy_cords)
 
         unless !jump_enemy_square or jump_enemy_square.piece
-          @valid_move_list << jump_enemy_square.location
+          capture_list << jump_enemy_square.location
         end
       end
     end
+    @valid_move_list = capture_list.count > 0 ? capture_list : non_capture_list
+
     puts "That piece has no valid moves.\n\n" if @valid_move_list.count == 0
     @valid_move_list.count == 0 ? false : @valid_move_list
   end

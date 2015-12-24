@@ -56,11 +56,11 @@ describe "Piece object" do
       expect(@piece.valid_moves).to eq([[3, 7], [7, 7]])
     end
 
-    it "returns two spaces if piece can either move or take enemy" do
+    it "forces player to capture if possible" do
       @e_one.remove_piece
       @e_two.remove_piece
       @e_four.remove_piece
-      expect(@piece.valid_moves).to eq([[4, 6], [7, 7]])
+      expect(@piece.valid_moves).to eq([[7, 7]])
     end
 
     it "returns two spaces if piece can move in either direction" do
