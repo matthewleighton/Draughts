@@ -57,18 +57,20 @@ class Piece
     end_square.piece.location = end_square.location
 
     if (end_square.location[0] - start_square.location[0]).abs == 2
-      p end_square.location
-      p start_square.location
-      x = (end_square.location[0] + start_square.location[0])/2
-      y = (end_square.location[1] + start_square.location[1])/2
-      
-      enemy_square = board.find_square([x, y])
-      enemy = enemy_square.piece
-
-      enemy.player.remaining_pieces -= 1
-      enemy.location = nil
-      enemy_square.piece = nil
+      capture_piece(start_square.location, end_square.location)
     end
+  end
+
+  def capture_piece(start_square, end_square)
+    x = (start_square[0] + end_square[0])/2
+    y = (start_square[1] + end_square[1])/2
+
+    enemy_square = board.find_square([x, y])
+    enemy = enemy_square.piece
+
+    enemy_square.piece = nil
+    enemy.location = nil
+    enemy.player.remaining_pieces -= 1
   end
 
   def update_board
