@@ -21,7 +21,7 @@ class Piece
   # Returns an array of valid coordinates the piece can move to.
   def valid_moves
     @valid_move_list = []
-    forward = @player.color == "W" ? 1 : -1
+    forward = @player.color == "w" ? 1 : -1
       
     possible_moves = [[@location[0] - 1, @location[1] + forward],
                       [@location[0] + 1, @location[1] + forward]]
@@ -60,7 +60,7 @@ class Piece
       capture_piece(start_square.location, end_square.location)
     end
 
-    if (@location[1] == 1 && @player.color == "B") or (@location[1] == 8 && @player.color == "W")
+    if (@location[1] == 1 && @player.color == "b") or (@location[1] == 8 && @player.color == "w")
       @king = true
     end
   end
@@ -80,6 +80,7 @@ class Piece
   def update_board
     board.find_square(location.join("")).piece = self
   end
+
 
   def remove_piece
     board.find_square(location).piece = nil

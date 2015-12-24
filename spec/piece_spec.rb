@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Piece object" do
   before :each do 
     @board = Board.new
-    @player = Player.new("Matthew", "W", @board)
+    @player = Player.new("Matthew", "w", @board)
     @piece = Piece.new(@player, [3, 2], @board)
   end
 
@@ -14,7 +14,7 @@ describe "Piece object" do
     end
 
     it "returns false if piece does not belong to player" do
-      other_player = Player.new("Charlie", "B", @board)
+      other_player = Player.new("Charlie", "b", @board)
       expect(@piece.is_friendly?(other_player)).to eq(false)
     end
 
@@ -84,15 +84,25 @@ describe "Piece object" do
     end
   end
 
-  describe "#update_board" do
-    
-    before :each do
-      @piece = Piece.new(@player, [4, 4])
-      @piece.update_board(@board)
-     
+  describe "#move_piece" do
+
+    it "upgrades a black piece to king when it reaches the board bottom" do
+      player = Player.new("Matthew", "b", @board)
+      piece = Piece.new(player, [4, 2], @board)
+      piece.update_board
+      expect(piece.king).to eq(false)
+      piece.move_piece([4, 1])
+      expect(piece.king).to eq(true)
     end
 
-   
-
+    it "upgrades a white piece to king when it reaches the board top" do
+      player = Player.new("Charlie", "w", @board)
+      piece = Piece.new(player, [4, 7], @board)
+      piece.update_board
+      expect(piece.king).to eq(false)
+      piece.move_piece([4, 8])
+      expect(piece.king).to eq(true)
+    end
   end
+
 end

@@ -65,7 +65,9 @@ class Board
       8.times do
         pos += 1
         if sq_list[pos].piece
-          piece = sq_list[pos].piece.player.color
+          piece = sq_list[pos].piece
+          piece = piece.king ? piece.player.color.upcase : piece.player.color
+          #piece = piece.upcase if piece.king # TEST THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         elsif valid_moves && valid_moves.include?(sq_list[pos].location)
           piece = "x"
         else

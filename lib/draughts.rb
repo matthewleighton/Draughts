@@ -37,8 +37,8 @@ class Draughts
   end
 
   def finish_game
-    puts "Someone won!"
-    puts "Goodbye!"
+    print @player_one.remaining_pieces ? "\n#{@player_one.name} " : "\n#{@player_two.name} "
+    print "wins! Goodbye."
   end
 
   def get_player_count
@@ -53,7 +53,7 @@ class Draughts
 
   def get_new_player(type, board)
     if type == "h"
-      color = @players.count == 0 ? "B" : "W"
+      color = @players.count == 0 ? "b" : "w"
       player = HumanPlayer.new(get_player_name, color, board)
     else
       player = AiPlayer.new
