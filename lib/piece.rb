@@ -20,7 +20,7 @@ class Piece
   end
 
   # Returns an array of valid coordinates the piece can move to.
-  def valid_moves
+  def valid_moves(opening_test = false)
     @valid_move_list = []
     capture_list = []
     non_capture_list = []
@@ -50,6 +50,12 @@ class Piece
         end
       end
     end
+
+    if opening_test
+      @valid_move_list = capture_list
+      return capture_list
+    end
+    
     @valid_move_list = capture_list.count > 0 ? capture_list : non_capture_list
 
     puts "That piece has no valid moves.\n\n" if @valid_move_list.count == 0
@@ -81,6 +87,11 @@ class Piece
     enemy_square.piece = nil
     enemy.location = nil
     enemy.player.remaining_pieces -= 1
+    enemy.alive = false
+    enemy.player.pieces.delete(enemy)
+
+    # Allow the player to capture again if possible.
+    @player.capture_again(self)
   end
 
   def update_board

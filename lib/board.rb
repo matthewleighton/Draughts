@@ -37,14 +37,18 @@ class Board
         if row < 3
           if row % 2 == 0
             sq.piece = Piece.new(p_two, sq.location, self) if sq.location[0] % 2 == 0
+            sq.piece.player.pieces << sq.piece if sq.piece
           else
             sq.piece = Piece.new(p_two, sq.location, self) if sq.location[0] % 2 == 1
+            sq.piece.player.pieces << sq.piece if sq.piece
           end
         elsif row > 4
           if row % 2 == 0
             sq.piece = Piece.new(p_one, sq.location, self) if sq.location[0] % 2 == 0
+            sq.piece.player.pieces << sq.piece if sq.piece
           else
             sq.piece = Piece.new(p_one, sq.location, self) if sq.location[0] % 2 == 1
+            sq.piece.player.pieces << sq.piece if sq.piece
           end
         end
       end
@@ -67,7 +71,6 @@ class Board
         if sq_list[pos].piece
           piece = sq_list[pos].piece
           piece = piece.king ? piece.player.color.upcase : piece.player.color
-          #piece = piece.upcase if piece.king # TEST THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         elsif valid_moves && valid_moves.include?(sq_list[pos].location)
           piece = "x"
         else
